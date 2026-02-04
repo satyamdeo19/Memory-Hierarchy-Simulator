@@ -1,0 +1,253 @@
+
+/* index.css additions */
+
+/* existing styles... */
+:root {
+  --bg-color: #121212;
+  --surface-color: #1e1e1e;
+  --primary-color: #bb86fc;
+  --text-color: #ffffff;
+  --secondary-text: #b0b0b0;
+  --hit-color: #03dac6;
+  --miss-color: #cf6679;
+  --info-color: #2196f3;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #a7ffeb 0%, #64ffda 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: var(--surface-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  margin-bottom: 2rem;
+}
+
+.config-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+  margin-bottom: 0.5rem;
+}
+
+.input-group input, .input-group textarea {
+  background-color: #2c2c2c;
+  border: 1px solid #333;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button.primary-btn {
+  background-color: var(--primary-color);
+  color: black;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+button.primary-btn:hover {
+  opacity: 0.9;
+}
+
+.visualization {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Changed from center to align tooltips */
+  gap: 2rem;
+  margin-top: 2rem;
+  min-height: 250px;
+}
+
+.mem-level {
+  background: var(--surface-color);
+  border: 2px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  flex: 1;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.mem-level h3 {
+  margin: 0 0 1rem 0;
+  color: var(--secondary-text);
+}
+
+.status-badge {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px; 
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.mem-level.hit {
+  border-color: var(--hit-color);
+  box-shadow: 0 0 20px rgba(3, 218, 198, 0.2);
+}
+
+.mem-level.hit .status-badge {
+  background-color: rgba(3, 218, 198, 0.2);
+  color: var(--hit-color);
+  opacity: 1;
+}
+
+.mem-level.miss {
+  border-color: var(--miss-color);
+  box-shadow: 0 0 20px rgba(207, 102, 121, 0.2);
+}
+
+.mem-level.miss .status-badge {
+  background-color: rgba(207, 102, 121, 0.2);
+  color: var(--miss-color);
+  opacity: 1;
+}
+
+.mem-level .explanation-tooltip {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  text-align: left;
+  line-height: 1.4;
+  border-left: 3px solid var(--info-color);
+  animation: fadeIn 0.3s ease;
+}
+
+.mem-level.miss .explanation-tooltip {
+    border-left-color: var(--miss-color);
+}
+.mem-level.hit .explanation-tooltip {
+    border-left-color: var(--hit-color);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.nav-btn {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.step-info {
+  text-align: center;
+  margin-top: 1rem;
+  font-family: monospace;
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+}
+
+.latency-display {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
+  font-weight: 300;
+}
+
+.latency-label {
+  font-size: 1rem;
+  color: var(--secondary-text);
+  display: block;
+}
+
+.arrow {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    color: #444;
+}
+
+.eviction-alert {
+    display: block;
+    margin-top: 0.5rem;
+    color: #ff9e80;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
