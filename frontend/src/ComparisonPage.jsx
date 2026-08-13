@@ -29,7 +29,35 @@ function ComparisonPage({ config }) {
             const rawJson = window.Module.runWasmSimulation(inputStr, true);
             const data = JSON.parse(rawJson);
             if (data.error) throw new Error(data.error);
-            setResults(data);
+            
+            // Map the raw WebAssembly JSON into the format the UI expects
+            const totalAccesses = addrList.length;
+            const comparison = data.results.map(res => {
+                const l1Hits = res.summary.L1.hits;
+                const hitRate = totalAccesses > 0 ? (l1Hits / totalAccesses) : 0;
+                const avgLatency = totalAccesses > 0 ? (res.summary.total_latency / totalAccesses).toFixed(2) : 0;
+                
+                // Count actual evictions (capacity + conflict misses usually lead to evictions)
+                const evictionCount = res.summary.L1.misses; 
+                
+                return {
+                    policy: res.policy,
+                    hitRate: hitRate,
+                    avgLatency: parseFloat(avgLatency),
+                    evictionCount: evictionCount
+                };
+            });
+            
+            let bestPolicy = comparison[0]?.policy || "LRU";
+            let lowestLatency = comparison[0]?.avgLatency || 999999;
+            for (const p of comparison) {
+                if (p.avgLatency < lowestLatency) {
+                    lowestLatency = p.avgLatency;
+                    bestPolicy = p.policy;
+                }
+            }
+            
+            setResults({ bestPolicy, comparison });
         } catch (err) {
             setError(err.message);
         } finally {
