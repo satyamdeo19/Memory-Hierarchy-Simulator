@@ -227,8 +227,8 @@ std::string formatAccessJSON(uint32_t addrVal,
 // ═══════════════════════════════════════════════════════════════════════════
 
 // Read config from stdin — called once; fills cfg.policyID too for single mode.
-bool readConfig(SimulationConfig& cfg) {
-    return !!(std::cin
+bool readConfig(SimulationConfig& cfg, std::istream& in) {
+    return !!(in
         >> cfg.l1Size >> cfg.l1Assoc
         >> cfg.l2Size >> cfg.l2Assoc
         >> cfg.l3Size >> cfg.l3Assoc >> cfg.l3Latency
@@ -239,9 +239,9 @@ bool readConfig(SimulationConfig& cfg) {
 }
 
 // Read + preprocess the trace (computes nextUse via backward pass).
-std::vector<AccessRecord> readTrace() {
+std::vector<AccessRecord> readTrace(std::istream& in) {
     size_t n;
-    if (!(std::cin >> n)) return {};
+    if (!(in >> n)) return {};
 
     std::vector<AccessRecord> trace;
     trace.reserve(n);
@@ -249,7 +249,7 @@ std::vector<AccessRecord> readTrace() {
     for (size_t i = 0; i < n; ++i) {
         std::string lineType;
         uint32_t addrVal;
-        if (!(std::cin >> lineType >> addrVal)) break;
+        if (!(in >> lineType >> addrVal)) break;
         AccessType t = (lineType == "W" || lineType == "w") ? AccessType::WRITE : AccessType::READ;
         trace.push_back({lineType, addrVal, t, 0xFFFFFFFFFFFFFFFF});
     }
@@ -317,7 +317,7 @@ DWORD WINAPI policyThreadFunc(LPVOID param) {
 }
 #endif
 
-void runCompareAll(const SimulationConfig& cfg, const std::vector<AccessRecord>& trace) {
+void runCompareAll(const SimulationConfig& cfg, const std::vector<AccessRecord>& trace, std::ostream& out) {
     PolicyTask tasks[4];
 #ifndef __EMSCRIPTEN__
     HANDLE     handles[4];
@@ -353,25 +353,25 @@ void runCompareAll(const SimulationConfig& cfg, const std::vector<AccessRecord>&
 #endif
 
     // Emit JSON — single-threaded from here, no output races
-    std::cout << "{\n";
-    std::cout << "  \"mode\": \"compare\",\n";
-    std::cout << "  \"results\": [\n";
+    out << "{\n";
+    out << "  \"mode\": \"compare\",\n";
+    out << "  \"results\": [\n";
     for (int i = 0; i < 4; ++i) {
-        std::cout << "    {\n";
-        std::cout << "      \"policy\": \"" << kPolicies[i].name << "\",\n";
-        std::cout << "      \"summary\": " << summaryToJSON(tasks[i].result, "      ") << "\n";
-        std::cout << "    }";
-        if (i < 3) std::cout << ",";
-        std::cout << "\n";
+        out << "    {\n";
+        out << "      \"policy\": \"" << kPolicies[i].name << "\",\n";
+        out << "      \"summary\": " << summaryToJSON(tasks[i].result, "      ") << "\n";
+        out << "    }";
+        if (i < 3) out << ",";
+        out << "\n";
     }
-    std::cout << "  ]\n}" << std::endl;
+    out << "  ]\n}" << std::endl;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Single-Simulation Mode  (default, no flags)
 //  Unchanged logic: outputs { trace: [...], summary: {...} }
 // ═══════════════════════════════════════════════════════════════════════════
-void runSingleSimulation(const SimulationConfig& cfg, const std::vector<AccessRecord>& trace) {
+void runSingleSimulation(const SimulationConfig& cfg, const std::vector<AccessRecord>& trace, std::ostream& out) {
     MemoryHierarchy memory;
     memory.initialize(
         cfg.l1Size, cfg.l1Assoc,
@@ -398,16 +398,16 @@ void runSingleSimulation(const SimulationConfig& cfg, const std::vector<AccessRe
         jsonObjects.push_back(formatAccessJSON(trace[i].val, trace[i].type, l1Addr, res));
     }
 
-    std::cout << "{\n";
-    std::cout << "  \"trace\": [\n";
+    out << "{\n";
+    out << "  \"trace\": [\n";
     for (size_t i = 0; i < jsonObjects.size(); ++i) {
-        std::cout << jsonObjects[i];
-        if (i < jsonObjects.size() - 1) std::cout << ",";
-        std::cout << "\n";
+        out << jsonObjects[i];
+        if (i < jsonObjects.size() - 1) out << ",";
+        out << "\n";
     }
-    std::cout << "  ],\n";
-    std::cout << "  \"summary\": " << summaryToJSON(stats, "  ") << "\n";
-    std::cout << "}" << std::endl;
+    out << "  ],\n";
+    out << "  \"summary\": " << summaryToJSON(stats, "  ") << "\n";
+    out << "}" << std::endl;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -427,21 +427,21 @@ int main(int argc, char* argv[]) {
         }
 
         SimulationConfig cfg{};
-        if (!readConfig(cfg)) {
+        if (!readConfig(cfg, std::cin)) {
             std::cout << "{ \"trace\": [], \"summary\": {} }" << std::endl;
             return 0;
         }
 
-        auto trace = readTrace();
+        auto trace = readTrace(std::cin);
         if (trace.empty()) {
             std::cout << "{ \"trace\": [], \"summary\": {} }" << std::endl;
             return 0;
         }
 
         if (compareAll) {
-            runCompareAll(cfg, trace);
+            runCompareAll(cfg, trace, std::cout);
         } else {
-            runSingleSimulation(cfg, trace);
+            runSingleSimulation(cfg, trace, std::cout);
         }
 
     } catch (const std::exception& e) {
@@ -465,41 +465,30 @@ int main(int argc, char* argv[]) {
 #include <emscripten/bind.h>
 
 std::string runWasmSimulation(std::string inputStr, bool compareAll) {
-    // Redirect std::cin and std::cout
     std::istringstream iss(inputStr);
     std::ostringstream oss;
     
-    std::streambuf* cinbuf = std::cin.rdbuf();
-    std::streambuf* coutbuf = std::cout.rdbuf();
-    
-    std::cin.rdbuf(iss.rdbuf());
-    std::cout.rdbuf(oss.rdbuf());
-    
     try {
         SimulationConfig cfg{};
-        if (!readConfig(cfg)) {
-            std::cout << "{ \"trace\": [], \"summary\": {} }" << std::endl;
+        if (!readConfig(cfg, iss)) {
+            oss << "{ \"trace\": [], \"summary\": {} }" << std::endl;
         } else {
-            auto trace = readTrace();
+            auto trace = readTrace(iss);
             if (trace.empty()) {
-                std::cout << "{ \"trace\": [], \"summary\": {} }" << std::endl;
+                oss << "{ \"trace\": [], \"summary\": {} }" << std::endl;
             } else {
                 if (compareAll) {
-                    runCompareAll(cfg, trace);
+                    runCompareAll(cfg, trace, oss);
                 } else {
-                    runSingleSimulation(cfg, trace);
+                    runSingleSimulation(cfg, trace, oss);
                 }
             }
         }
     } catch (const std::exception& e) {
-        std::cout << "{ \"trace\": [], \"summary\": {}, \"error\": \"" << e.what() << "\" }" << std::endl;
+        oss << "{ \"trace\": [], \"summary\": {}, \"error\": \"" << e.what() << "\" }" << std::endl;
     } catch (...) {
-        std::cout << "{ \"trace\": [], \"summary\": {}, \"error\": \"Unknown Error\" }" << std::endl;
+        oss << "{ \"trace\": [], \"summary\": {}, \"error\": \"Unknown Error\" }" << std::endl;
     }
-    
-    // Restore original buffers
-    std::cin.rdbuf(cinbuf);
-    std::cout.rdbuf(coutbuf);
     
     return oss.str();
 }
