@@ -33,7 +33,8 @@ jobs:
                -s MODULARIZE=1 \
                -s EXPORT_NAME="CacheSimulatorModule" \
                -s ALLOW_MEMORY_GROWTH=1 \
-               -s EXPORTED_RUNTIME_METHODS="['ccall','cwrap']"
+               -s EXPORTED_RUNTIME_METHODS="['ccall','cwrap']" \
+               --no-entry
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

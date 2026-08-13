@@ -413,6 +413,7 @@ void runSingleSimulation(const SimulationConfig& cfg, const std::vector<AccessRe
 // ═══════════════════════════════════════════════════════════════════════════
 //  Entry Point
 // ═══════════════════════════════════════════════════════════════════════════
+#ifndef __EMSCRIPTEN__
 int main(int argc, char* argv[]) {
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(NULL);
@@ -454,6 +455,8 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+#endif
+
 
 // ═══════════════════════════════════════════════════════════════════════════
 //  Emscripten WebAssembly Bindings
