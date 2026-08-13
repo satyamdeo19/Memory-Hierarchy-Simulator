@@ -38,7 +38,7 @@ function ComparisonPage({ config }) {
                 const avgLatency = totalAccesses > 0 ? (res.summary.total_latency / totalAccesses).toFixed(2) : 0;
                 
                 // Count actual evictions (capacity + conflict misses usually lead to evictions)
-                const evictionCount = res.summary.L1.misses; 
+                const evictionCount = (res.summary.L1.miss_types.CAPACITY || 0) + (res.summary.L1.miss_types.CONFLICT || 0);
                 
                 return {
                     policy: res.policy,

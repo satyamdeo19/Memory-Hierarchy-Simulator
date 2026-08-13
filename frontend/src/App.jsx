@@ -126,7 +126,7 @@ function App() {
         ramAssoc:    16,
         diskLatency: 10000,
         blockSize:   64,
-        addresses:   "# --- CACHE SIMULATOR TUTORIAL ---\n# \n# 1. COLD MISSES & CACHE HITS\nR 0000\nW 0040\nR 0000\n\n# 2. ADVANCED PATTERN\n# This specific access pattern causes LRU, FIFO,\n# LFU, and Optimal policies to perform differently!\n# Run the 'Compare Policies' tab to see it!\nR 0100\nR 0140\nR 0180\nR 01C0\nR 0100\nR 0140\nR 0200\nR 0100\nR 0140\nR 0180\nR 01C0\nR 0200"
+        addresses:   "# --- CACHE SIMULATOR TUTORIAL ---\n# \n# 1. COLD MISSES & CACHE HITS\nR 0000\nW 0040\nR 0000\n\n# 2. THE \"LRU KILLER\" PATTERN\n# In our default 2-way associative cache,\n# 0x0000, 0x0200, and 0x0400 all map to the SAME Set (Set 0)!\n# This cyclic pattern forces LRU to constantly evict the wrong block,\n# while Optimal and LFU handle it much better.\n# Run the 'Compare Policies' tab to see it!\nR 0000\nR 0200\nR 0400\nR 0000\nR 0200\nR 0400\nR 0000\nR 0200\nR 0400\nR 0000\nR 0200\nR 0400"
     });
 
     const [activeTab,        setActiveTab]        = useState('simulate');
