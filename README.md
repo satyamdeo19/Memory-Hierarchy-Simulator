@@ -1,139 +1,90 @@
 # Visual Cache Simulator
 
-A comprehensive, interactive memory hierarchy simulator that visualizes how data moves between L1, L2, L3 Caches, Main Memory (RAM), and Virtual Memory (TLB, Page Tables). Built with **C++17** for the core simulation engine, **Node.js** for the API middleware, and **React (Vite)** for a modern, responsive frontend.
+A comprehensive, interactive memory hierarchy simulator that visualizes how data moves between L1, L2, L3 Caches, Main Memory (RAM), and Virtual Memory (TLB, Page Tables). Built with **C++17** for the core simulation engine and compiled to **WebAssembly (Wasm)** to run instantly in the browser alongside a modern, responsive **React (Vite)** frontend.
+
+**🌐 Live Demo:** [https://satyamdeo19.github.io/Memory-Hierarchy-Simulator/](https://satyamdeo19.github.io/Memory-Hierarchy-Simulator/)
 
 ## 🚀 Features
 
+- **Zero-Latency Serverless Architecture**: The C++ simulation engine runs natively in the browser via WebAssembly. No backend servers, no cold starts, and maximum privacy.
 - **Visual Simulation**: Watch data move through the memory hierarchy in real-time with step-by-step execution.
 - **Deep Decomposition**: Inspect Virtual Address translation (VPN → PPN) and Physical Address usage (Tag, Index, Offset).
 - **Advanced Policies**: Select from **LRU**, **FIFO**, **LFU**, and **Optimal (Belady's Algorithm)** replacement policies.
-- **Comparison Mode**: Benchmarks all 4 policies **in parallel** using `std::thread`; ~4x faster than running them sequentially.
+- **Comparison Mode**: Benchmarks all 4 policies simultaneously to compare hit rates and total latencies.
 - **Analytics Dashboard**: Detailed breakdown of Hit Rates, Miss Types (Cold, Conflict, Capacity), and Latency Histograms.
 - **L1 Cache State Grid**: Live Set×Way visualisation of L1 cache contents at every simulation step — highlighted on access, coloured by state (clean/dirty/evicted).
 - **Trace File Import**: Import real Valgrind lackey `.din` traces or plain `R/W` text files directly into the simulator.
 - **Configurable Hardware**: Customise cache sizes, associativity, block sizes, and latencies for L1/L2/L3/RAM/Disk.
-- **Unit Tests**: 20+ Google Test cases covering cache logic, all replacement policies, and virtual memory behaviour.
 
 ## 🛠 Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Simulation Engine | C++17 · CMake · `std::thread` |
-| API Middleware | Node.js · Express |
+| Simulation Engine | C++17 · Emscripten (WebAssembly) |
 | Frontend | React 19 · Vite · Vanilla CSS |
-| Testing | Google Test (via CMake `FetchContent`) |
+| CI/CD | GitHub Actions |
+| Hosting | GitHub Pages |
 
-## 📋 Prerequisites
+## ⚙️ Setup & Installation (Local Development)
 
-- **Node.js** (v16+)
-- **CMake** (3.14+)
-- **C++ Compiler** with C++17 and threading support (MinGW-w64 / GCC / MSVC)
+Because the project uses WebAssembly, the C++ code must be compiled using Emscripten before the React frontend can run.
 
-## ⚙️ Setup & Installation
+### 1. Prerequisites
+- **Node.js** (v18+)
+- **Emscripten SDK (emsdk)** installed and activated in your terminal.
 
-### 1. Clone the Repository
+### 2. Clone the Repository
 ```sh
-git clone <repository-url>
-cd cache-simulator
+git clone https://github.com/satyamdeo19/Memory-Hierarchy-Simulator.git
+cd Memory-Hierarchy-Simulator
 ```
 
-### 2. Build the C++ Backend (CRITICAL)
-```cmd
-cmake -S backend -B backend/build
-cmake --build backend/build
-```
-> If you modify any C++ source, re-run `cmake --build backend/build`.
-
-### 3. Install API Dependencies
+### 3. Compile the C++ Engine to WebAssembly
+Run the following Emscripten command from the root of the project to generate `simulator.js` and `simulator.wasm` inside the `frontend/public/` directory:
 ```sh
-cd api && npm install && cd ..
+em++ backend/src/*.cpp -I backend/include -std=c++17 -o frontend/public/simulator.js -O3 --bind -s MODULARIZE=1 -s EXPORT_NAME="CacheSimulatorModule" -s ALLOW_MEMORY_GROWTH=1 -s EXPORTED_RUNTIME_METHODS="['ccall','cwrap']" --no-entry
 ```
 
-### 4. Install Frontend Dependencies
-```sh
-cd frontend && npm install && cd ..
-```
-
-## 🏃‍♂️ How to Run
-
-Start the API and frontend in **two separate terminals**:
-
-### Terminal 1 — API Server (port 3001)
-```sh
-cd api
-node server.js
-```
-
-### Terminal 2 — Frontend (port 5173)
+### 4. Run the React Frontend
 ```sh
 cd frontend
+npm install
 npm run dev
 ```
 
 Open **http://localhost:5173** in your browser.
 
-## 🧪 Running Unit Tests
+## 🚀 Deployment (CI/CD)
 
-After building the backend, run the full Google Test suite:
-```cmd
-cd backend/build
-ctest --output-on-failure
-```
-
-Or run the test binary directly:
-```cmd
-backend/build/tests/run_tests.exe
-```
-
-Tests cover:
-- `Cache` — cold miss, hit detection, eviction, dirty bit, `markDirty`, `isFull`
-- `ReplacementPolicy` — LRU/FIFO/LFU/Optimal victim selection and metadata updates
-- `MemoryHierarchy` — L1/L2 hit paths, TLB hit/miss, page fault, address translation
+This project is configured with a fully automated CI/CD pipeline using **GitHub Actions**.
+Whenever you push to the `main` branch, the `.github/workflows/deploy.yml` script will automatically:
+1. Setup the Emscripten SDK.
+2. Compile the C++ engine to WebAssembly.
+3. Build the React frontend using Vite.
+4. Deploy the static assets to **GitHub Pages**.
 
 ## 📂 Project Structure
 
 ```
-cache-simulator/
+Memory-Hierarchy-Simulator/
 ├── backend/                  # C++ Simulation Engine
 │   ├── src/
-│   │   ├── main.cpp          # Entry point; --compare-all multithreaded mode
+│   │   ├── main.cpp          # Entry point & Emscripten bindings
 │   │   ├── MemoryHierarchy.cpp  # Core logic (Caches + VM)
 │   │   └── ReplacementPolicy.cpp # LRU, FIFO, LFU, Optimal
-│   ├── include/              # Header files
-│   ├── tests/                # Google Test suite
-│   │   ├── test_cache.cpp
-│   │   ├── test_replacement.cpp
-│   │   └── test_memory_hierarchy.cpp
-│   └── CMakeLists.txt
+│   └── include/              # Header files
 ├── frontend/                 # React Application
+│   ├── public/               # Static assets & Compiled Wasm
 │   └── src/
-│       ├── App.jsx           # Main layout, trace import, useCacheState hook
+│       ├── App.jsx           # Main layout, trace import, Wasm loading
 │       ├── CacheGrid.jsx     # L1 Set×Way state visualisation
 │       ├── AnalyticsDashboard.jsx
 │       └── ComparisonPage.jsx
-├── api/
-│   └── server.js             # /simulate and /compare (single --compare-all process)
-└── README.md
+└── .github/workflows/        # CI/CD deployment scripts
 ```
 
-## ⚡ Architecture: Multithreaded Policy Comparison
+## ⚡ Architecture: Why WebAssembly?
 
-The `/compare` endpoint previously spawned **4 separate C++ processes** sequentially. It now spawns **one process** with the `--compare-all` flag. Inside C++:
+Originally, this project utilized a Node.js Express backend to execute the C++ engine via child processes. While this worked, it introduced severe network latency and required backend hosting (which is prone to "cold starts" on free tiers). 
 
-```
-Main thread: read config + trace once, preprocess next-use (O(N))
-├── Thread 0: MemoryHierarchy (LRU)     → SimulationStats[0]
-├── Thread 1: MemoryHierarchy (FIFO)    → SimulationStats[1]
-├── Thread 2: MemoryHierarchy (LFU)     → SimulationStats[2]
-└── Thread 3: MemoryHierarchy (Optimal) → SimulationStats[3]
-join all → emit single JSON document
-```
-
-Each thread has its own independent `MemoryHierarchy` instance → **zero shared mutable state → no mutexes needed**.
-
-## 🐛 Troubleshooting
-
-- **Build Fails**: Ensure your compiler supports C++17. On Windows, MinGW-w64 8+ works well.
-- **`memory_sim.exe` not found**: Confirm `cmake --build backend/build` succeeded; the binary lands at `backend/build/memory_sim.exe`.
-- **API crashes with "spawn ENOENT"**: The binary is missing — rebuild the C++ backend.
-- **Tests fail to configure**: CMake 3.14+ is required for `FetchContent`. An internet connection is needed on the first configure to download Google Test.
+By migrating the core C++ engine to **WebAssembly**, we achieved a "Serverless" architecture. The C++ code is shipped directly to the client's browser, enabling instant, near-native execution speeds without any backend infrastructure. This eliminates server costs, removes network bottlenecks, and ensures user data never leaves their local machine.
