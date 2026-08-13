@@ -249,7 +249,9 @@ std::vector<AccessRecord> readTrace(std::istream& in) {
     for (size_t i = 0; i < n; ++i) {
         std::string lineType;
         uint32_t addrVal;
-        if (!(in >> lineType >> addrVal)) break;
+        
+        // Traces are usually hex. Use std::hex to parse addrVal correctly.
+        if (!(in >> lineType >> std::hex >> addrVal >> std::dec)) break;
         AccessType t = (lineType == "W" || lineType == "w") ? AccessType::WRITE : AccessType::READ;
         trace.push_back({lineType, addrVal, t, 0xFFFFFFFFFFFFFFFF});
     }
