@@ -126,7 +126,7 @@ function App() {
         ramAssoc:    16,
         diskLatency: 10000,
         blockSize:   64,
-        addresses:   "# --- CACHE SIMULATOR TUTORIAL ---\n# \n# 1. COLD MISSES (Loading data)\nR 0000\nW 0040\n\n# 2. CACHE HITS (Fast!)\nR 0000\nW 0000\n\n# 3. CONFLICT MISS & EVICTION\n# Addresses 1000 and 2000 map to \n# the exact same Set as 0000.\n# Because L1 Associativity is 2, \n# the 3rd item evicts 0000!\nR 1000\nR 2000\n\n# 4. VERIFY THE EVICTION (Miss)\nR 0000"
+        addresses:   "# --- CACHE SIMULATOR TUTORIAL ---\n# \n# 1. COLD MISSES & CACHE HITS\nR 0000\nW 0040\nR 0000\n\n# 2. ADVANCED PATTERN\n# This specific access pattern causes LRU, FIFO,\n# LFU, and Optimal policies to perform differently!\n# Run the 'Compare Policies' tab to see it!\nR 0100\nR 0140\nR 0180\nR 01C0\nR 0100\nR 0140\nR 0200\nR 0100\nR 0140\nR 0180\nR 01C0\nR 0200"
     });
 
     const [activeTab,        setActiveTab]        = useState('simulate');
