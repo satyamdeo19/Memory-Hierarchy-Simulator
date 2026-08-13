@@ -27,6 +27,7 @@ jobs:
         run: |
           emcc backend/src/*.cpp \
                -I backend/include \
+               -std=c++17 \
                -o frontend/public/simulator.js \
                -O3 --bind \
                -s MODULARIZE=1 \
