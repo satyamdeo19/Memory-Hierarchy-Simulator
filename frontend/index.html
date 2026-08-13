@@ -10,5 +10,14 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script src="/simulator.js"></script>
+    <script>
+      window.addEventListener('load', () => {
+        if (window.CacheSimulatorModule) {
+          window.CacheSimulatorModule().then(instance => {
+            window.Module = instance;
+          });
+        }
+      });
+    </script>
   </body>
 </html>
