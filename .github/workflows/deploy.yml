@@ -25,7 +25,8 @@ jobs:
 
       - name: Compile C++ to WebAssembly
         run: |
-          emcc backend/src/main.cpp backend/src/MemoryHierarchy.cpp \
+          emcc backend/src/*.cpp \
+               -I backend/include \
                -o frontend/public/simulator.js \
                -O3 --bind \
                -s MODULARIZE=1 \
@@ -36,7 +37,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install Dependencies
         working-directory: ./frontend
