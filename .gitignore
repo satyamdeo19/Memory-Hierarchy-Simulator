@@ -1,0 +1,30 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Editor Directories
+.vscode/
+.idea/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# C++ / CMake Build Artifacts
+backend/build/
+*.exe
+*.obj
+*.o
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Frontend Build Output
+frontend/dist/
+frontend/build/
+
+# API
+api/node_modules/

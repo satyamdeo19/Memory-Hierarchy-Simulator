@@ -15,9 +15,13 @@ set(CMAKE_MAKEFILE_DEPENDS
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeRCInformation.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeSystemSpecificInformation.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeSystemSpecificInitialize.cmake"
+  "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CTest.cmake"
+  "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CTestTargets.cmake"
+  "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CTestUseLaunchers.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/GNU-CXX.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/GNU.cmake"
+  "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/DartConfiguration.tcl.in"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeCXXLinkerInformation.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake"
   "C:/Users/Satyam Deo/AppData/Local/Programs/Python/Python312/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Linker/GNU-CXX.cmake"
@@ -36,6 +40,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/4.0.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/4.0.0/CMakeRCCompiler.cmake"
   "CMakeFiles/4.0.0/CMakeSystem.cmake"
+  "E:/Files/Resume-projects/cache-simulator/backend/tests/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -47,9 +52,41 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "DartConfiguration.tcl"
+  "tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
+  "CMakeFiles/cache_lib.dir/DependInfo.cmake"
   "CMakeFiles/memory_sim.dir/DependInfo.cmake"
+  "tests/CMakeFiles/run_tests.dir/DependInfo.cmake"
+  "tests/CMakeFiles/Experimental.dir/DependInfo.cmake"
+  "tests/CMakeFiles/Nightly.dir/DependInfo.cmake"
+  "tests/CMakeFiles/Continuous.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyMemoryCheck.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyStart.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyUpdate.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyConfigure.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyBuild.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyTest.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyCoverage.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlyMemCheck.dir/DependInfo.cmake"
+  "tests/CMakeFiles/NightlySubmit.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalStart.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalUpdate.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalConfigure.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalBuild.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalTest.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalCoverage.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalMemCheck.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ExperimentalSubmit.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousStart.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousUpdate.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousConfigure.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousBuild.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousTest.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousCoverage.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousMemCheck.dir/DependInfo.cmake"
+  "tests/CMakeFiles/ContinuousSubmit.dir/DependInfo.cmake"
   )

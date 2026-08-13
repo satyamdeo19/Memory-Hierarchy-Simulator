@@ -9,16 +9,25 @@ function ComparisonPage({ config }) {
         setLoading(true);
         setError(null);
         try {
-            const addrList = config.addresses.split('\n').filter(s => s.trim() !== "");
-            const response = await fetch('http://localhost:3001/compare', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    ...config,
-                    addresses: addrList
-                })
-            });
-            const data = await response.json();
+            const addrList = config.addresses.split('\n').filter(s => s.trim() !== "" && !s.trim().startsWith('#'));
+            
+            // Build the string that C++ std::cin expects
+            const tlbSize = 64;
+            const tlbLatency = 10;
+            const pageSize = 4096;
+            const policyID = 0; // default LRU
+            
+            let inputStr = `${config.l1Size} ${config.l1Assoc} ${config.l2Size} ${config.l2Assoc} ${config.l3Size} ${config.l3Assoc} ${config.l3Latency} ${config.ramSize} ${config.ramAssoc} ${config.diskLatency} ${tlbSize} ${tlbLatency} ${config.blockSize} ${pageSize} ${policyID}\n`;
+            inputStr += `${addrList.length}\n`;
+            inputStr += addrList.join('\n');
+
+            if (!window.Module || !window.Module.runWasmSimulation) {
+                throw new Error("Simulation engine is still loading. Please try again in a few seconds.");
+            }
+
+            // Note: Second parameter 'true' triggers compareAll mode
+            const rawJson = window.Module.runWasmSimulation(inputStr, true);
+            const data = JSON.parse(rawJson);
             if (data.error) throw new Error(data.error);
             setResults(data);
         } catch (err) {
@@ -34,62 +43,72 @@ function ComparisonPage({ config }) {
 
     return (
         <div className="comparison-container">
-            <div className="card">
-                <h2>Policy Comparison</h2>
-                <button className="primary-btn" onClick={handleCompare}>
-                    Run Comparison
+            <div className="card glass-panel" style={{ textAlign: 'center' }}>
+                <h2 style={{ marginBottom: '0.5rem' }}>🎯 Policy Comparison</h2>
+                <p style={{ color: 'var(--secondary-text)', maxWidth: '600px', margin: '0 auto 2rem auto', lineHeight: '1.6' }}>
+                    This tool runs your configured trace against <strong>four different Cache Replacement Policies</strong> (LRU, FIFO, LFU, and Random) simultaneously. 
+                    It allows you to empirically observe which policy yields the highest Hit Rate and lowest Average Latency for your specific memory access pattern.
+                </p>
+                <button className="primary-btn" onClick={handleCompare} disabled={loading} style={{ maxWidth: '300px' }}>
+                    {loading ? 'RUNNING...' : 'RUN COMPARISON'}
                 </button>
-                {error && <div style={{ color: 'red', marginTop: '1rem' }}>{error}</div>}
+                {error && <div style={{ color: 'var(--miss-color)', marginTop: '1rem' }}>{error}</div>}
             </div>
 
             {results && (
                 <>
-                    <div className="card">
-                        <h3>Best Policy: <span style={{color: '#00e676'}}>{results.bestPolicy}</span></h3>
+                    <div className="card glass-panel">
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            🏆 Best Policy: <span style={{color: 'var(--primary-color)', fontSize: '1.4rem'}}>{results.bestPolicy}</span>
+                        </h3>
                         
-                        <table style={{width: '100%', textAlign: 'left', borderCollapse: 'collapse', marginTop: '1rem'}}>
+                        <table style={{width: '100%', textAlign: 'left', borderCollapse: 'collapse', marginTop: '1rem', fontFamily: 'var(--font-mono)'}}>
                             <thead>
-                                <tr style={{borderBottom: '1px solid #444'}}>
-                                    <th style={{padding: '0.5rem'}}>Policy</th>
-                                    <th style={{padding: '0.5rem'}}>Hit Rate</th>
-                                    <th style={{padding: '0.5rem'}}>Avg Latency</th>
-                                    <th style={{padding: '0.5rem'}}>Evictions</th>
+                                <tr style={{borderBottom: '1px solid var(--surface-border)', color: 'var(--secondary-text)'}}>
+                                    <th style={{padding: '1rem'}}>Policy</th>
+                                    <th style={{padding: '1rem'}}>Hit Rate</th>
+                                    <th style={{padding: '1rem'}}>Avg Latency</th>
+                                    <th style={{padding: '1rem'}}>Evictions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {results.comparison.map(p => (
-                                    <tr key={p.policy} style={{borderBottom: '1px solid #333'}}>
-                                        <td style={{padding: '0.5rem', fontWeight: 'bold'}}>{p.policy}</td>
-                                        <td style={{padding: '0.5rem'}}>{(p.hitRate * 100).toFixed(1)}%</td>
-                                        <td style={{padding: '0.5rem'}}>{p.avgLatency} cyc</td>
-                                        <td style={{padding: '0.5rem'}}>{p.evictionCount}</td>
+                                    <tr key={p.policy} style={{borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s'}}>
+                                        <td style={{padding: '1rem', fontWeight: 'bold', color: p.policy === results.bestPolicy ? 'var(--primary-color)' : 'var(--text-color)'}}>
+                                            {p.policy} {p.policy === results.bestPolicy && '⭐'}
+                                        </td>
+                                        <td style={{padding: '1rem', color: 'var(--hit-color)'}}>{(p.hitRate * 100).toFixed(1)}%</td>
+                                        <td style={{padding: '1rem'}}>{p.avgLatency} cyc</td>
+                                        <td style={{padding: '1rem', color: 'var(--miss-color)'}}>{p.evictionCount}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
 
-                    <div className="card">
-                        <h3>Latency Comparison (Lower is Better)</h3>
-                        <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem'}}>
+                    <div className="card glass-panel">
+                        <h3>Latency Comparison <span style={{fontSize: '0.9rem', color: 'var(--secondary-text)', fontWeight: 'normal'}}>(Lower is Better)</span></h3>
+                        <div style={{display: 'flex', flexDirection: 'column', gap: '1.5rem', marginTop: '1.5rem', fontFamily: 'var(--font-mono)'}}>
                             {results.comparison.map(p => (
                                 <div key={p.policy}>
-                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem'}}>
-                                        <span>{p.policy}</span>
-                                        <span>{p.avgLatency}</span>
+                                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: 'var(--secondary-text)'}}>
+                                        <span style={{color: p.policy === results.bestPolicy ? 'var(--primary-color)' : 'var(--text-color)'}}>{p.policy}</span>
+                                        <span>{p.avgLatency} cycles</span>
                                     </div>
                                     <div style={{
-                                        height: '24px', 
+                                        height: '12px', 
                                         width: '100%', 
-                                        backgroundColor: '#333',
-                                        borderRadius: '4px',
-                                        overflow: 'hidden'
+                                        backgroundColor: 'rgba(255,255,255,0.05)',
+                                        borderRadius: '10px',
+                                        overflow: 'hidden',
+                                        border: '1px solid rgba(255,255,255,0.1)'
                                     }}>
                                         <div style={{
                                             height: '100%',
                                             width: `${(p.avgLatency / maxLatency) * 100}%`,
-                                            backgroundColor: p.policy === results.bestPolicy ? '#00e676' : '#29b6f6',
-                                            transition: 'width 0.5s ease'
+                                            background: p.policy === results.bestPolicy ? 'linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%)' : 'rgba(255,255,255,0.2)',
+                                            transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                                            boxShadow: p.policy === results.bestPolicy ? '0 0 10px rgba(100, 255, 218, 0.5)' : 'none'
                                         }} />
                                     </div>
                                 </div>

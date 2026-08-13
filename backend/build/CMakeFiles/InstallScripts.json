@@ -1,7 +1,8 @@
 {
 	"InstallScripts" : 
 	[
-		"E:/Files/Resume-projects/cache-simulator/backend/build/cmake_install.cmake"
+		"E:/Files/Resume-projects/cache-simulator/backend/build/cmake_install.cmake",
+		"E:/Files/Resume-projects/cache-simulator/backend/build/tests/cmake_install.cmake"
 	],
 	"Parallel" : false
 }

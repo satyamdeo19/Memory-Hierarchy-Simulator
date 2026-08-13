@@ -8,10 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "E:/Files/Resume-projects/cache-simulator/backend/src/Cache.cpp" "CMakeFiles/memory_sim.dir/src/Cache.cpp.obj" "gcc" "CMakeFiles/memory_sim.dir/src/Cache.cpp.obj.d"
-  "E:/Files/Resume-projects/cache-simulator/backend/src/MemoryAddress.cpp" "CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj" "gcc" "CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj.d"
-  "E:/Files/Resume-projects/cache-simulator/backend/src/MemoryHierarchy.cpp" "CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj" "gcc" "CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj.d"
-  "E:/Files/Resume-projects/cache-simulator/backend/src/ReplacementPolicy.cpp" "CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj" "gcc" "CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj.d"
   "E:/Files/Resume-projects/cache-simulator/backend/src/main.cpp" "CMakeFiles/memory_sim.dir/src/main.cpp.obj" "gcc" "CMakeFiles/memory_sim.dir/src/main.cpp.obj.d"
   )
 

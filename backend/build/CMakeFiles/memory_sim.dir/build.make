@@ -76,97 +76,30 @@ CMakeFiles/memory_sim.dir/src/main.cpp.obj: CMakeFiles/memory_sim.dir/includes_C
 CMakeFiles/memory_sim.dir/src/main.cpp.obj: E:/Files/Resume-projects/cache-simulator/backend/src/main.cpp
 CMakeFiles/memory_sim.dir/src/main.cpp.obj: CMakeFiles/memory_sim.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/memory_sim.dir/src/main.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/main.cpp.obj -MF CMakeFiles\memory_sim.dir\src\main.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\main.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/main.cpp.obj -MF CMakeFiles\memory_sim.dir\src\main.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\main.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp
 
 CMakeFiles/memory_sim.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/memory_sim.dir/src/main.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp > CMakeFiles\memory_sim.dir\src\main.cpp.i
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp > CMakeFiles\memory_sim.dir\src\main.cpp.i
 
 CMakeFiles/memory_sim.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/memory_sim.dir/src/main.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp -o CMakeFiles\memory_sim.dir\src\main.cpp.s
-
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj: CMakeFiles/memory_sim.dir/flags.make
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj: CMakeFiles/memory_sim.dir/includes_CXX.rsp
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj: E:/Files/Resume-projects/cache-simulator/backend/src/MemoryAddress.cpp
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj: CMakeFiles/memory_sim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj -MF CMakeFiles\memory_sim.dir\src\MemoryAddress.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\MemoryAddress.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\MemoryAddress.cpp
-
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\MemoryAddress.cpp > CMakeFiles\memory_sim.dir\src\MemoryAddress.cpp.i
-
-CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\MemoryAddress.cpp -o CMakeFiles\memory_sim.dir\src\MemoryAddress.cpp.s
-
-CMakeFiles/memory_sim.dir/src/Cache.cpp.obj: CMakeFiles/memory_sim.dir/flags.make
-CMakeFiles/memory_sim.dir/src/Cache.cpp.obj: CMakeFiles/memory_sim.dir/includes_CXX.rsp
-CMakeFiles/memory_sim.dir/src/Cache.cpp.obj: E:/Files/Resume-projects/cache-simulator/backend/src/Cache.cpp
-CMakeFiles/memory_sim.dir/src/Cache.cpp.obj: CMakeFiles/memory_sim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/memory_sim.dir/src/Cache.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/Cache.cpp.obj -MF CMakeFiles\memory_sim.dir\src\Cache.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\Cache.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\Cache.cpp
-
-CMakeFiles/memory_sim.dir/src/Cache.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/memory_sim.dir/src/Cache.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\Cache.cpp > CMakeFiles\memory_sim.dir\src\Cache.cpp.i
-
-CMakeFiles/memory_sim.dir/src/Cache.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/memory_sim.dir/src/Cache.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\Cache.cpp -o CMakeFiles\memory_sim.dir\src\Cache.cpp.s
-
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj: CMakeFiles/memory_sim.dir/flags.make
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj: CMakeFiles/memory_sim.dir/includes_CXX.rsp
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj: E:/Files/Resume-projects/cache-simulator/backend/src/ReplacementPolicy.cpp
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj: CMakeFiles/memory_sim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj -MF CMakeFiles\memory_sim.dir\src\ReplacementPolicy.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\ReplacementPolicy.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\ReplacementPolicy.cpp
-
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\ReplacementPolicy.cpp > CMakeFiles\memory_sim.dir\src\ReplacementPolicy.cpp.i
-
-CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\ReplacementPolicy.cpp -o CMakeFiles\memory_sim.dir\src\ReplacementPolicy.cpp.s
-
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj: CMakeFiles/memory_sim.dir/flags.make
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj: CMakeFiles/memory_sim.dir/includes_CXX.rsp
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj: E:/Files/Resume-projects/cache-simulator/backend/src/MemoryHierarchy.cpp
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj: CMakeFiles/memory_sim.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj -MF CMakeFiles\memory_sim.dir\src\MemoryHierarchy.cpp.obj.d -o CMakeFiles\memory_sim.dir\src\MemoryHierarchy.cpp.obj -c E:\Files\Resume-projects\cache-simulator\backend\src\MemoryHierarchy.cpp
-
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.i"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\Files\Resume-projects\cache-simulator\backend\src\MemoryHierarchy.cpp > CMakeFiles\memory_sim.dir\src\MemoryHierarchy.cpp.i
-
-CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.s"
-	C:\MinGW\bin\c++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\MemoryHierarchy.cpp -o CMakeFiles\memory_sim.dir\src\MemoryHierarchy.cpp.s
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\Files\Resume-projects\cache-simulator\backend\src\main.cpp -o CMakeFiles\memory_sim.dir\src\main.cpp.s
 
 # Object files for target memory_sim
 memory_sim_OBJECTS = \
-"CMakeFiles/memory_sim.dir/src/main.cpp.obj" \
-"CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj" \
-"CMakeFiles/memory_sim.dir/src/Cache.cpp.obj" \
-"CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj" \
-"CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj"
+"CMakeFiles/memory_sim.dir/src/main.cpp.obj"
 
 # External object files for target memory_sim
 memory_sim_EXTERNAL_OBJECTS =
 
 memory_sim.exe: CMakeFiles/memory_sim.dir/src/main.cpp.obj
-memory_sim.exe: CMakeFiles/memory_sim.dir/src/MemoryAddress.cpp.obj
-memory_sim.exe: CMakeFiles/memory_sim.dir/src/Cache.cpp.obj
-memory_sim.exe: CMakeFiles/memory_sim.dir/src/ReplacementPolicy.cpp.obj
-memory_sim.exe: CMakeFiles/memory_sim.dir/src/MemoryHierarchy.cpp.obj
 memory_sim.exe: CMakeFiles/memory_sim.dir/build.make
+memory_sim.exe: libcache_lib.a
 memory_sim.exe: CMakeFiles/memory_sim.dir/linkLibs.rsp
 memory_sim.exe: CMakeFiles/memory_sim.dir/objects1.rsp
 memory_sim.exe: CMakeFiles/memory_sim.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable memory_sim.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=E:\Files\Resume-projects\cache-simulator\backend\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable memory_sim.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\memory_sim.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

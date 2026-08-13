@@ -25,22 +25,22 @@ function AnalyticsDashboard({ summary }) {
                 <div style={{display: 'flex', gap: '2rem', flexWrap: 'wrap'}}>
                     <div style={{flex: 1, minWidth: '300px'}}>
                         <h3>Hit Rates</h3>
-                        <table style={{width: '100%', borderCollapse: 'collapse'}}>
+                        <table style={{width: '100%', borderCollapse: 'collapse', fontFamily: 'var(--font-mono)'}}>
                             <thead>
-                                <tr style={{borderBottom: '1px solid #444', textAlign: 'left'}}>
-                                    <th style={{padding: '0.5rem'}}>Level</th>
-                                    <th style={{padding: '0.5rem'}}>Hits</th>
-                                    <th style={{padding: '0.5rem'}}>Misses</th>
-                                    <th style={{padding: '0.5rem'}}>Rate</th>
+                                <tr style={{borderBottom: '1px solid var(--surface-border)', textAlign: 'left', color: 'var(--secondary-text)'}}>
+                                    <th style={{padding: '0.8rem'}}>Level</th>
+                                    <th style={{padding: '0.8rem'}}>Hits</th>
+                                    <th style={{padding: '0.8rem'}}>Misses</th>
+                                    <th style={{padding: '0.8rem'}}>Rate</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {levels.map(lvl => (
-                                    <tr key={lvl} style={{borderBottom: '1px solid #333'}}>
-                                        <td style={{padding: '0.5rem', fontWeight: 'bold'}}>{lvl}</td>
-                                        <td style={{padding: '0.5rem'}}>{summary[lvl]?.hits || 0}</td>
-                                        <td style={{padding: '0.5rem'}}>{summary[lvl]?.misses || 0}</td>
-                                        <td style={{padding: '0.5rem'}}>{getHitRate(lvl)}</td>
+                                    <tr key={lvl} style={{borderBottom: '1px solid rgba(255,255,255,0.05)', transition: 'background 0.2s'}}>
+                                        <td style={{padding: '0.8rem', fontWeight: 'bold', color: 'var(--primary-color)'}}>{lvl}</td>
+                                        <td style={{padding: '0.8rem', color: 'var(--hit-color)'}}>{summary[lvl]?.hits || 0}</td>
+                                        <td style={{padding: '0.8rem', color: 'var(--miss-color)'}}>{summary[lvl]?.misses || 0}</td>
+                                        <td style={{padding: '0.8rem', fontWeight: 'bold'}}>{getHitRate(lvl)}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -53,12 +53,12 @@ function AnalyticsDashboard({ summary }) {
                            const types = summary[lvl]?.miss_types || {};
                            if (Object.keys(types).length === 0) return null;
                            return (
-                               <div key={lvl} style={{marginBottom: '1rem'}}>
-                                   <strong>{lvl} Misses:</strong>
-                                   <div style={{display: 'flex', gap: '1rem', marginTop: '0.25rem'}}>
+                               <div key={lvl} style={{marginBottom: '1rem', background: 'rgba(0,0,0,0.2)', padding: '1rem', borderRadius: '8px'}}>
+                                   <strong style={{color: 'var(--primary-color)'}}>{lvl} Misses</strong>
+                                   <div style={{display: 'flex', gap: '1rem', marginTop: '0.5rem', fontFamily: 'var(--font-mono)'}}>
                                        <span style={{color: '#4fc3f7'}}>Cold: {types.COLD || 0}</span>
-                                       <span style={{color: '#ff8a65'}}>Conflict: {types.CONFLICT || 0}</span>
-                                       <span style={{color: '#e57373'}}>Capacity: {types.CAPACITY || 0}</span>
+                                       <span style={{color: '#ffa726'}}>Conflict: {types.CONFLICT || 0}</span>
+                                       <span style={{color: '#ef5350'}}>Capacity: {types.CAPACITY || 0}</span>
                                    </div>
                                </div>
                            );
@@ -69,25 +69,27 @@ function AnalyticsDashboard({ summary }) {
 
             <div className="card">
                 <h3>Latency Distribution</h3>
-                <div style={{marginTop: '1rem'}}>
+                <div style={{marginTop: '1.5rem', fontFamily: 'var(--font-mono)'}}>
                     {Object.entries(histogram).map(([bucket, count]) => (
-                        <div key={bucket} style={{marginBottom: '0.5rem'}}>
-                            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.2rem'}}>
+                        <div key={bucket} style={{marginBottom: '1rem'}}>
+                            <div style={{display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', marginBottom: '0.4rem', color: 'var(--secondary-text)'}}>
                                 <span>{bucket} cycles</span>
-                                <span>{count}</span>
+                                <span style={{color: 'var(--text-color)', fontWeight: 'bold'}}>{count}</span>
                             </div>
                             <div style={{
                                 width: '100%',
-                                height: '20px',
-                                backgroundColor: '#333',
-                                borderRadius: '4px',
-                                overflow: 'hidden'
+                                height: '12px',
+                                backgroundColor: 'rgba(255,255,255,0.05)',
+                                borderRadius: '10px',
+                                overflow: 'hidden',
+                                border: '1px solid rgba(255,255,255,0.1)'
                             }}>
                                 <div style={{
                                     height: '100%',
                                     width: `${maxCount > 0 ? (count / maxCount) * 100 : 0}%`,
-                                    backgroundColor: '#7e57c2',
-                                    transition: 'width 0.5s'
+                                    background: 'linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 100%)',
+                                    transition: 'width 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                                    boxShadow: '0 0 10px rgba(100, 255, 218, 0.5)'
                                 }}/>
                             </div>
                         </div>
