@@ -37,8 +37,8 @@ function ComparisonPage({ config }) {
                 const hitRate = totalAccesses > 0 ? (l1Hits / totalAccesses) : 0;
                 const avgLatency = totalAccesses > 0 ? (res.summary.total_latency / totalAccesses).toFixed(2) : 0;
                 
-                // Count actual evictions (capacity + conflict misses usually lead to evictions)
-                const evictionCount = (res.summary.L1.miss_types.CAPACITY || 0) + (res.summary.L1.miss_types.CONFLICT || 0);
+                // In C++, MissType is an enum: 1=Cold, 2=Conflict, 3=Capacity
+                const evictionCount = (res.summary.L1.miss_types["3"] || 0) + (res.summary.L1.miss_types["2"] || 0);
                 
                 return {
                     policy: res.policy,
